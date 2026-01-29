@@ -6,6 +6,7 @@ export type CreateUserInput = {
 }
 
 export interface UserWithoutPassword {
+    id: string;
     email: string;
     isAdmin: boolean;
     firstName: string;
@@ -13,6 +14,7 @@ export interface UserWithoutPassword {
 }
 
 export type UserRecord = {
+    id: string;
     email: string;
     isAdmin: boolean;
     firstName: string;
@@ -20,4 +22,8 @@ export type UserRecord = {
     password: string;
     createdAt: Date;
     updatedAt: Date;
+}
+export type JWTPayload = {
+    userId: string;
+    isAdmin: boolean;
 }

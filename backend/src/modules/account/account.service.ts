@@ -1,6 +1,10 @@
-import type { UserWithoutPassword, CreateUserInput } from "./account.types.ts";
+import type { UserWithoutPassword, CreateUserInput, JWTPayload } from "./account.types.ts";
 import { userModel } from "./account.model.ts";
 import { uuidv7 } from "uuidv7";
+import bcrypt from "bcrypt";
+import { config } from "dotenv";
+import jwt from 'jsonwebtoken';
+config();
 
 export interface RegisterUserResult {
     success: boolean;
@@ -17,6 +21,8 @@ export class AccountService {
             }
             else {
                 const sid = uuidv7();
+                const hashedPassword = await bcrypt.hash(input.password, 10);
+                input.password = hashedPassword
                 const newUser = await userModel.createUser({
                     id: sid,
                     email: input.email,
@@ -38,4 +44,14 @@ export class AccountService {
             }
         }
     }
+    async generateToken(userId: string, isAdmin: boolean): Promise<string> {
+        const payload = {userId, type: 'access', isAdmin: isAdmin};
+        return jwt.sign(payload, process.env.JWT_SECRET!, {expiresIn: 60*60});
+    }
+    verifyToken(token: string): JWTPayload{
+        const decoded = jwt.verify(token, process.env.JWT_SECRET!) as JWTPayload;
+        return decoded;
+    }
 }
+
+export const accountService = new AccountService()
