@@ -11,10 +11,16 @@ authRoutes.post("/register", async (req: Request, res: Response) => {
         if (result.success && result.user) {
             const token = await accountService.generateToken(result.user.id, result.user?.isAdmin);
             res.cookie("token" ,token);
-            res.json({success: result.success, message: result.message}).statusCode=200;
+            res.json({success: result.success, message: result.message}).status(200);
+        }
+        else{
+            res.json({success: false, message: result.message}).status(403);
         }
     }
     catch(error) {
-        
+        console.log("ERROR IS::: ", error);
+        res.json({success: false, message: "Unable to create user"}).status(500)
     }
-})
+});
+
+export default authRoutes;

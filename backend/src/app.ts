@@ -1,2 +1,9 @@
-const msg:string = "Hello, World!";
-console.log(msg);
+import express from "express";
+import authRoutes from "./routes/auth.ts";
+
+const app = express();
+
+app.use(authRoutes);
+app.listen(3000, ()=> {
+    console.log("Server is listening on port 3000");
+})
