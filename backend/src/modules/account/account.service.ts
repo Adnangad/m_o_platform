@@ -37,6 +37,7 @@ export class AccountService {
                 }
             }
         }catch(error) {
+            console.log("ERROR:: ", error);
             return {
                 success: false,
                 message: error as string,

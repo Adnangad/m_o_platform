@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "dev": "tsx watch src/app.ts"
   },
   "keywords": [],
   "author": "",
@@ -23,8 +25,11 @@
     "drizzle-kit": "^0.31.8",
     "drizzle-orm": "^0.45.1",
     "express": "^5.2.1",
+    "express-json": "^1.0.0",
     "express-router": "^0.0.1",
     "jsonwebtoken": "^9.0.3",
+    "postgres": "^3.4.8",
+    "tsx": "^4.21.0",
     "uuidv7": "^1.1.0"
   }
 }
